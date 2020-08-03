@@ -1,0 +1,16 @@
+name: 'Setup Soup'
+description: 'Download and register the Soup CLI to the local path for easy building of C++ code'
+author: 'mwasplund'
+branding:
+  color: orange
+  icon: terminal
+inputs:
+  version:
+    description: 'Version of Soup to install, defaults to latest if not set'
+    required: false
+outputs:
+  soupPath:
+    description: 'The resulting location of the Soup installation'
+runs:
+  using: 'node12'
+  main: 'index.js'
