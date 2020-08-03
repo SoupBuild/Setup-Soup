@@ -9,14 +9,14 @@ export async function run(): Promise<void> {
 
     const url = `https://github.com/mwasplund/Soup/releases/download/${version}/Soup.zip`;
     console.log(`Downloading Tool: ${url}`);
-    const soupPath = await tc.downloadTool(url);
+    const soupArchivePath = await tc.downloadTool(url);
 
-    console.log(`Extracting the archive`);
-    const soupExtractedFolder = await tc.extractZip(soupPath, "bin");
+    console.log(`Extracting Archive: ${soupArchivePath}`);
+    const soupPath = await tc.extractZip(soupArchivePath, "bin");
 
-    console.log(`soupPath: ${soupExtractedFolder}`);
-    core.setOutput("soupPath", soupExtractedFolder);
+    console.log(`soupPath: ${soupPath}`);
+    core.setOutput("soupPath", soupPath);
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(`Error: ${error.message}`);
   }
 }

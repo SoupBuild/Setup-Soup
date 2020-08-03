@@ -1419,14 +1419,14 @@ function run() {
             console.log(`Setup Soup Version: ${version}`);
             const url = `https://github.com/mwasplund/Soup/releases/download/${version}/Soup.zip`;
             console.log(`Downloading Tool: ${url}`);
-            const soupPath = yield tc.downloadTool(url);
-            console.log(`Extracting the archive`);
-            const soupExtractedFolder = yield tc.extractZip(soupPath, "bin");
-            console.log(`soupPath: ${soupExtractedFolder}`);
-            core.setOutput("soupPath", soupExtractedFolder);
+            const soupArchivePath = yield tc.downloadTool(url);
+            console.log(`Extracting Archive: ${soupArchivePath}`);
+            const soupPath = yield tc.extractZip(soupArchivePath, "bin");
+            console.log(`soupPath: ${soupPath}`);
+            core.setOutput("soupPath", soupPath);
         }
         catch (error) {
-            core.setFailed(error.message);
+            core.setFailed(`Error: ${error.message}`);
         }
     });
 }
