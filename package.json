@@ -2,9 +2,13 @@
   "name": "Setup-Soup",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "pack": "ncc build",
+    "all": "npm run build && npm run lint && npm run pack"
   },
   "repository": {
     "type": "git",
@@ -20,5 +24,12 @@
   "dependencies": {
     "@actions/core": "^1.2.4",
     "@actions/github": "^4.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "@zeit/ncc": "^0.22.3",
+    "eslint": "^7.6.0",
+    "typescript": "^3.9.7"
   }
 }

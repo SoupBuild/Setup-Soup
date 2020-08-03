@@ -1,5 +1,5 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+import * as core from '@actions/core'
+import * as github from '@actions/github'
 
 try {
   // Load the requested version and attempt to retrieve it from the releases

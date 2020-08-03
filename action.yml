@@ -13,4 +13,4 @@ outputs:
     description: 'The resulting location of the Soup installation'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'dist/index.js'
