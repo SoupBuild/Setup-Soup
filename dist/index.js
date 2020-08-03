@@ -3596,7 +3596,7 @@ const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 try {
     // Load the requested version and attempt to retrieve it from the releases
-    const version = core.getInput('version');
+    const version = core.getInput("version");
     console.log(`Setup Soup Version: ${version}`);
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2);
