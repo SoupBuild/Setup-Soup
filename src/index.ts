@@ -1,14 +1,22 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
+import * as tc from "@actions/tool-cache";
 
-try {
-  // Load the requested version and attempt to retrieve it from the releases
-  const version = core.getInput("version");
-  console.log(`Setup Soup Version: ${version}`);
+export async function run(): Promise<void> {
+  try {
+    // Load the requested version and attempt to retrieve it from the releases
+    const version = core.getInput("version");
+    console.log(`Setup Soup Version: ${version}`);
 
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+    const url = `https://github.com/mwasplund/Soup/releases/download/${version}/Soup.zip`;
+    console.log(`Downloading Tool: ${url}`);
+    const soupPath = await tc.downloadTool(url);
+
+    console.log(`Extracting the archive`);
+    const soupExtractedFolder = await tc.extractZip(soupPath, "bin");
+
+    console.log(`soupPath: ${soupExtractedFolder}`);
+    core.setOutput("soupPath", soupExtractedFolder);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
