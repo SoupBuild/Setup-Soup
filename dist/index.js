@@ -1423,6 +1423,7 @@ function run() {
             console.log(`Extracting Archive: ${soupArchivePath}`);
             const soupPath = yield tc.extractZip(soupArchivePath, "bin");
             console.log(`soupPath: ${soupPath}`);
+            core.addPath(soupPath);
             core.setOutput("soupPath", soupPath);
         }
         catch (error) {

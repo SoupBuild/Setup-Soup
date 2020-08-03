@@ -15,6 +15,7 @@ export async function run(): Promise<void> {
     const soupPath = await tc.extractZip(soupArchivePath, "bin");
 
     console.log(`soupPath: ${soupPath}`);
+    core.addPath(soupPath);
     core.setOutput("soupPath", soupPath);
   } catch (error) {
     core.setFailed(`Error: ${error.message}`);
