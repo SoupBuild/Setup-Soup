@@ -9,20 +9,21 @@ interface Asset {
 }
 
 export interface Release {
+  tag_name: string;
   name: string;
   assets: Asset[];
   tarball_url: string;
   zipball_url: string;
 }
 
-async function getlatestRelease(): Promise<Release> {
+async function getLatestRelease(): Promise<Release> {
   const headers: IHeaders = {
     Accept: "application/vnd.github.v3+json",
   };
 
-  const GitHubApiUrl = "https://api.github.com/repos";
+  const GitHubApiUrl = "https://api.github.com";
   const soupRepoPath = "mwasplund/soup";
-  const url = `${GitHubApiUrl}/${soupRepoPath}/releases/latest`;
+  const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/latest`;
 
   const httpClient: thc.HttpClient = new thc.HttpClient("github-api");
   const response = await httpClient.get(url, headers);
@@ -33,25 +34,57 @@ async function getlatestRelease(): Promise<Release> {
 
   const responseBody = await response.readBody();
   const result: Release = JSON.parse(responseBody.toString());
-  console.log(`Sion: ${responseBody}`);
+
+  return result;
+}
+
+async function getTagRelease(tag: string): Promise<Release> {
+  const headers: IHeaders = {
+    Accept: "application/vnd.github.v3+json",
+  };
+
+  const GitHubApiUrl = "https://api.github.com";
+  const soupRepoPath = "mwasplund/soup";
+  const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tag/${tag}`;
+
+  const httpClient: thc.HttpClient = new thc.HttpClient("github-api");
+  const response = await httpClient.get(url, headers);
+
+  if (response.message.statusCode !== 200) {
+    throw new Error(`${url} failed: ${response.message.statusCode}`);
+  }
+
+  const responseBody = await response.readBody();
+  const result: Release = JSON.parse(responseBody.toString());
 
   return result;
 }
 
 export async function run(): Promise<void> {
   try {
+    // Load the requested version and attempt to retrieve it from the releases
     const version = core.getInput("version");
+    console.log(`Setup Soup Version: ${version}`);
+    let activeRelease: Release;
     if (version === "latest") {
-      const latestRelease = await getlatestRelease();
-      console.log(latestRelease);
+      console.log(`Get Latest Release`);
+      activeRelease = await getLatestRelease();
+    } else {
+      console.log(`Get Release for provided tag`);
+      activeRelease = await getTagRelease(version);
     }
 
-    // Load the requested version and attempt to retrieve it from the releases
-    console.log(`Setup Soup Version: ${version}`);
+    console.log(`Using Release: ${activeRelease.name}`);
+    const soupAsset = activeRelease.assets.find((asset) => {
+      return asset.name == "Soup.zip";
+    });
+    if (soupAsset === undefined) {
+      throw new Error(`Invalid Release: Could not find Soup asset`);
+    }
 
-    const url = `https://github.com/mwasplund/Soup/releases/download/${version}/Soup.zip`;
-    console.log(`Downloading Tool: ${url}`);
-    const soupArchivePath = await tc.downloadTool(url);
+    const assetUrl = soupAsset.url;
+    console.log(`Downloading Tool: ${assetUrl}`);
+    const soupArchivePath = await tc.downloadTool(assetUrl);
 
     console.log(`Extracting Archive: ${soupArchivePath}`);
     const soupPath = await tc.extractZip(soupArchivePath, "bin");
