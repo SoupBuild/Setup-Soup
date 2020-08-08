@@ -6,6 +6,7 @@ import { IHeaders } from "typed-rest-client/Interfaces";
 interface Asset {
   name: string;
   url: string;
+  browser_download_url: string;
 }
 
 export interface Release {
@@ -82,7 +83,7 @@ export async function run(): Promise<void> {
       throw new Error(`Invalid Release: Could not find Soup asset`);
     }
 
-    const assetUrl = soupAsset.url;
+    const assetUrl = soupAsset.browser_download_url;
     console.log(`Downloading Tool: ${assetUrl}`);
     const soupArchivePath = await tc.downloadTool(assetUrl);
 

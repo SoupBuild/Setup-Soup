@@ -1504,7 +1504,7 @@ function run() {
             if (soupAsset === undefined) {
                 throw new Error(`Invalid Release: Could not find Soup asset`);
             }
-            const assetUrl = soupAsset.url;
+            const assetUrl = soupAsset.browser_download_url;
             console.log(`Downloading Tool: ${assetUrl}`);
             const soupArchivePath = yield tc.downloadTool(assetUrl);
             console.log(`Extracting Archive: ${soupArchivePath}`);
