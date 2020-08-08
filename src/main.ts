@@ -41,7 +41,7 @@ export async function run(): Promise<void> {
   try {
     const version = core.getInput("version");
     if (version === "latest") {
-      const latestRelease = getlatestRelease();
+      const latestRelease = await getlatestRelease();
       console.log(latestRelease);
     }
 

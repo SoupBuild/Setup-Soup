@@ -1469,7 +1469,7 @@ function run() {
         try {
             const version = core.getInput("version");
             if (version === "latest") {
-                const latestRelease = getlatestRelease();
+                const latestRelease = yield getlatestRelease();
                 console.log(latestRelease);
             }
             // Load the requested version and attempt to retrieve it from the releases
