@@ -33,6 +33,7 @@ async function getlatestRelease(): Promise<Release> {
 
   const responseBody = await response.readBody();
   const result: Release = JSON.parse(responseBody.toString());
+  console.log(`Sion: ${responseBody}`);
 
   return result;
 }

@@ -1461,6 +1461,7 @@ function getlatestRelease() {
         }
         const responseBody = yield response.readBody();
         const result = JSON.parse(responseBody.toString());
+        console.log(`Sion: ${responseBody}`);
         return result;
     });
 }
