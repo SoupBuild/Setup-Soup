@@ -1471,7 +1471,7 @@ function getTagRelease(tag) {
         };
         const GitHubApiUrl = "https://api.github.com";
         const soupRepoPath = "mwasplund/soup";
-        const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tag/${tag}`;
+        const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tags/${tag}`;
         const httpClient = new thc.HttpClient("github-api");
         const response = yield httpClient.get(url, headers);
         if (response.message.statusCode !== 200) {

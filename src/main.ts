@@ -46,7 +46,7 @@ async function getTagRelease(tag: string): Promise<Release> {
 
   const GitHubApiUrl = "https://api.github.com";
   const soupRepoPath = "mwasplund/soup";
-  const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tag/${tag}`;
+  const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tags/${tag}`;
 
   const httpClient: thc.HttpClient = new thc.HttpClient("github-api");
   const response = await httpClient.get(url, headers);
