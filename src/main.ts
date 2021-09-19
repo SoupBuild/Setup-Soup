@@ -45,7 +45,7 @@ async function getTagRelease(tag: string): Promise<Release> {
   };
 
   const GitHubApiUrl = "https://api.github.com";
-  const soupRepoPath = "mwasplund/soup";
+  const soupRepoPath = "SoupBuild/Soup";
   const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tags/${tag}`;
 
   const httpClient: thc.HttpClient = new thc.HttpClient("github-api");
@@ -77,7 +77,7 @@ export async function run(): Promise<void> {
 
     console.log(`Using Release: ${activeRelease.name}`);
     const soupAsset = activeRelease.assets.find((asset) => {
-      return asset.name == "Soup.zip";
+      return asset.name == "SoupBuild.zip";
     });
     if (soupAsset === undefined) {
       throw new Error(`Invalid Release: Could not find Soup asset`);

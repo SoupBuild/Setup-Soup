@@ -1,5 +1,5 @@
 name: 'Setup Soup'
-description: 'Download and register the Soup CLI to the local path for easy building of C++ code'
+description: 'Download and register the Soup CLI to the local path for easy building of code'
 author: 'mwasplund'
 branding:
   color: orange

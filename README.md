@@ -1,5 +1,5 @@
 # Setup Soup (Javascript Action)
-This action prints downloads and registers the specified Soup CLI version for easy building of C++ projects in GitHub builds.
+This action prints downloads and registers the specified Soup CLI version for easy building in GitHub builds.
 
 ## Inputs
 
