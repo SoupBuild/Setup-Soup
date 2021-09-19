@@ -2128,7 +2128,7 @@ function getTagRelease(tag) {
             Accept: "application/vnd.github.v3+json",
         };
         const GitHubApiUrl = "https://api.github.com";
-        const soupRepoPath = "mwasplund/soup";
+        const soupRepoPath = "SoupBuild/Soup";
         const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/tags/${tag}`;
         const httpClient = new thc.HttpClient("github-api");
         const response = yield httpClient.get(url, headers);
@@ -2157,10 +2157,10 @@ function run() {
             }
             console.log(`Using Release: ${activeRelease.name}`);
             const soupAsset = activeRelease.assets.find((asset) => {
-                return asset.name == "Soup.zip";
+                return asset.name == "SoupBuild.zip";
             });
             if (soupAsset === undefined) {
-                throw new Error(`Invalid Release: Could not find Soup asset`);
+                throw new Error(`Invalid Release: Could not find Soup Build asset`);
             }
             const assetUrl = soupAsset.browser_download_url;
             console.log(`Downloading Tool: ${assetUrl}`);
