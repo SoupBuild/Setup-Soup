@@ -80,7 +80,7 @@ export async function run(): Promise<void> {
       return asset.name == "SoupBuild.zip";
     });
     if (soupAsset === undefined) {
-      throw new Error(`Invalid Release: Could not find Soup asset`);
+      throw new Error(`Invalid Release: Could not find Soup Build asset`);
     }
 
     const assetUrl = soupAsset.browser_download_url;
