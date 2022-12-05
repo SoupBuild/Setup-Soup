@@ -94,6 +94,8 @@ export async function run(): Promise<void> {
     core.addPath(soupPath);
     core.setOutput("soupPath", soupPath);
   } catch (error) {
-    core.setFailed(`Error: ${error.message}`);
+    if (error instanceof Error) {
+      core.setFailed(`Error: ${error.message}`);
+    }
   }
 }
