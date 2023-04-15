@@ -95,8 +95,9 @@ function run() {
                 activeRelease = yield getTagRelease(version);
             }
             console.log(`Using Release: ${activeRelease.name}`);
+            const archiveFileName = `soup-build-${version}-windows-x64.zip`;
             const soupAsset = activeRelease.assets.find((asset) => {
-                return asset.name == "SoupBuild.zip";
+                return asset.name == archiveFileName;
             });
             if (soupAsset === undefined) {
                 throw new Error(`Invalid Release: Could not find Soup Build asset`);
