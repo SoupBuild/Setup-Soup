@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import * as thc from "typed-rest-client/HttpClient";
 import { IHeaders } from "typed-rest-client/Interfaces";
+import os from "os";
 
 interface Asset {
   name: string;
@@ -76,7 +77,24 @@ export async function run(): Promise<void> {
     }
 
     console.log(`Using Release: ${activeRelease.name}`);
-    const archiveFileName = `soup-build-${version}-windows-x64.zip`;
+
+    const activeVersion = activeRelease.tag_name.substring(1);
+    let system = "";
+    switch (os.platform()) {
+      case "win32":
+        system = "windows";
+        break;
+      case "linux":
+        system = "linux";
+        break;
+      default:
+        core.error(`Unknown host operating system: ${os.platform()}`);
+    }
+
+    const architecture = os.arch();
+    const archiveFileName = `soup-build-${activeVersion}-${system}-${architecture}.zip`;
+    console.log(`Using Archive: ${archiveFileName}`);
+
     const soupAsset = activeRelease.assets.find((asset) => {
       return asset.name == archiveFileName;
     });

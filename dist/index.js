@@ -38,11 +38,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const tc = __importStar(__nccwpck_require__(7784));
 const thc = __importStar(__nccwpck_require__(5538));
+const os_1 = __importDefault(__nccwpck_require__(2037));
 function getLatestRelease() {
     return __awaiter(this, void 0, void 0, function* () {
         const headers = {
@@ -95,7 +99,21 @@ function run() {
                 activeRelease = yield getTagRelease(version);
             }
             console.log(`Using Release: ${activeRelease.name}`);
-            const archiveFileName = `soup-build-${version}-windows-x64.zip`;
+            const activeVersion = activeRelease.tag_name.substring(1);
+            let system = "";
+            switch (os_1.default.platform()) {
+                case "win32":
+                    system = "windows";
+                    break;
+                case "linux":
+                    system = "linux";
+                    break;
+                default:
+                    core.error(`Unknown host operating system: ${os_1.default.platform()}`);
+            }
+            const architecture = os_1.default.arch();
+            const archiveFileName = `soup-build-${activeVersion}-${system}-${architecture}.zip`;
+            console.log(`Using Archive: ${archiveFileName}`);
             const soupAsset = activeRelease.assets.find((asset) => {
                 return asset.name == archiveFileName;
             });
