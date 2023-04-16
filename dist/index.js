@@ -127,7 +127,17 @@ function run() {
             console.log(`Downloading Tool: ${assetUrl}`);
             const soupArchivePath = yield tc.downloadTool(assetUrl);
             console.log(`Extracting Archive: ${soupArchivePath}`);
-            const soupPath = yield tc.extractZip(soupArchivePath, "bin");
+            let soupPath = "";
+            switch (archiveExtension) {
+                case "zip":
+                    soupPath = yield tc.extractZip(soupArchivePath, "bin");
+                    break;
+                case "tar.gz":
+                    soupPath = yield tc.extractTar(soupArchivePath, "bin");
+                    break;
+                default:
+                    core.error(`Unknown archive extension: ${archiveExtension}`);
+            }
             console.log(`soupPath: ${soupPath}`);
             core.addPath(soupPath);
             core.setOutput("soupPath", soupPath);
