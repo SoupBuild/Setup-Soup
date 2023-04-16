@@ -24,7 +24,7 @@ async function getLatestRelease(): Promise<Release> {
   };
 
   const GitHubApiUrl = "https://api.github.com";
-  const soupRepoPath = "mwasplund/soup";
+  const soupRepoPath = "SoupBuild/Soup";
   const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/latest`;
 
   const httpClient: thc.HttpClient = new thc.HttpClient("github-api");

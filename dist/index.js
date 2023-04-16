@@ -53,7 +53,7 @@ function getLatestRelease() {
             Accept: "application/vnd.github.v3+json",
         };
         const GitHubApiUrl = "https://api.github.com";
-        const soupRepoPath = "mwasplund/soup";
+        const soupRepoPath = "SoupBuild/Soup";
         const url = `${GitHubApiUrl}/repos/${soupRepoPath}/releases/latest`;
         const httpClient = new thc.HttpClient("github-api");
         const response = yield httpClient.get(url, headers);
