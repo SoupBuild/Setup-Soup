@@ -101,18 +101,21 @@ function run() {
             console.log(`Using Release: ${activeRelease.name}`);
             const activeVersion = activeRelease.tag_name.substring(1);
             let system = "";
+            let archiveExtension = "";
             switch (os_1.default.platform()) {
                 case "win32":
                     system = "windows";
+                    archiveExtension = "zip";
                     break;
                 case "linux":
                     system = "linux";
+                    archiveExtension = "tar.gz";
                     break;
                 default:
                     core.error(`Unknown host operating system: ${os_1.default.platform()}`);
             }
             const architecture = os_1.default.arch();
-            const archiveFileName = `soup-build-${activeVersion}-${system}-${architecture}.zip`;
+            const archiveFileName = `soup-build-${activeVersion}-${system}-${architecture}.${archiveExtension}`;
             console.log(`Using Archive: ${archiveFileName}`);
             const soupAsset = activeRelease.assets.find((asset) => {
                 return asset.name == archiveFileName;

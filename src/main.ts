@@ -80,19 +80,22 @@ export async function run(): Promise<void> {
 
     const activeVersion = activeRelease.tag_name.substring(1);
     let system = "";
+    let archiveExtension = "";
     switch (os.platform()) {
       case "win32":
         system = "windows";
+        archiveExtension = "zip";
         break;
       case "linux":
         system = "linux";
+        archiveExtension = "tar.gz";
         break;
       default:
         core.error(`Unknown host operating system: ${os.platform()}`);
     }
 
     const architecture = os.arch();
-    const archiveFileName = `soup-build-${activeVersion}-${system}-${architecture}.zip`;
+    const archiveFileName = `soup-build-${activeVersion}-${system}-${architecture}.${archiveExtension}`;
     console.log(`Using Archive: ${archiveFileName}`);
 
     const soupAsset = activeRelease.assets.find((asset) => {
