@@ -110,7 +110,17 @@ export async function run(): Promise<void> {
     const soupArchivePath = await tc.downloadTool(assetUrl);
 
     console.log(`Extracting Archive: ${soupArchivePath}`);
-    const soupPath = await tc.extractZip(soupArchivePath, "bin");
+    let soupPath = "";
+    switch (archiveExtension) {
+      case "zip":
+        soupPath = await tc.extractZip(soupArchivePath, "bin");
+        break;
+      case "tar.gz":
+        soupPath = await tc.extractTar(soupArchivePath, "bin");
+        break;
+      default:
+        core.error(`Unknown archive extension: ${archiveExtension}`);
+    }
 
     console.log(`soupPath: ${soupPath}`);
     core.addPath(soupPath);
